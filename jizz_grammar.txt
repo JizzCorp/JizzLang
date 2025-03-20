@@ -1,0 +1,93 @@
+CFLOW:
+	if
+	else
+	case
+	elsecase
+	
+	loop
+
+	exit
+	return
+
+IO:
+	in
+	out
+
+DTYPE:
+	Bool
+	Int
+	Flt
+	Str
+	Function
+
+PAR:
+	{
+	}
+	[
+	]
+	(
+	)
+
+CMD:
+	;
+	,
+
+ASSN:
+	<-
+
+CMP:
+	>
+	<
+	>=
+	<=
+	=
+	!=
+
+OP:
+	+
+	-
+	*
+	/
+	%
+	@
+	^
+	and
+	or
+	not
+
+BOP:
+	&
+	?
+	!
+
+STR:
+	` -> init state
+	ASCII - {`}
+	` -> final state
+
+NAT:
+	[1-9] -> init state
+	[0-9]
+	[0-9] -> final state
+
+NINT:
+	{-} -> init state
+	[1-9]
+	[0-9] -> final state
+
+PREAL:
+	[0-9] -> init state
+	{.}
+	[0-9]
+	[1-9] -> final state
+
+NREAL:
+	{-} -> init state
+	[0-9]
+	{.}
+	[0-9]
+	[1-9] -> final state
+
+WORD:
+	[0-9] | [a-Z] | {_} -> init state
+	[a-Z] | {_} -> final state

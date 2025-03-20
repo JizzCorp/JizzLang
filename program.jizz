@@ -1,0 +1,9 @@
+Flt 01weirdval <- 3.01;
+
+Int i <- 0;
+loop(i < 100) {
+	i <- i + 1;
+	01weirdval <- 01weirdval * i;
+}
+
+return 01weirdval;

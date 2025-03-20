@@ -1,0 +1,49 @@
+Program ::= Statement*
+
+Statement ::= Output | If | Case | Loop | Return | Exit | FunctionDecl | Input | Declaration | Assignment | FunctionCall | Expression 
+
+Output ::= <out> <(> Expression <)> <;>
+
+If ::= <if> Expression <,> [Statement [<;> | <else> <,> [Statement <;> | <{> Program <}>]] | [<{> Program <}> | <{> Program <}> <else> <,> [Statement <;> |<{> Program <}> ]]]
+
+Case ::= <case> Expression <,> [Statement [<;> | <elsecase> <,> [Statement <;> | <{> Program <}>]] | [<{> Program <}> | <{> Program <}> <elsecase> <,> [Statement <;> |<{> Program <}> ]]]
+
+Loop ::= <loop> Expression <,> [Statement <;> | <{> Program <}>]
+
+Return ::= <return> Expression <;>
+
+Exit ::= <exit> <NAT> <;>
+
+FunctionDecl ::= <Function> <WORD> <ASSN> [<(>  <)> | <(> [<DTYPE> <WORD> <,>]* <DTYPE> <WORD> <)> ] <{> Program <}>
+
+Input ::= <DTYPE> <WORD> <ASSN> <in> <(> <)> <;> | <WORD> <ASSN> <in> <(> <)> <;>
+
+Declaration ::= <DTYPE> <WORD> <;> | <DTYPE> Assignment
+
+Assignment ::= <WORD> <ASSN> Expression <;>
+
+FunctionCall ::= <WORD> <(> <)> <;> | <WORD> <(> [Expression <,>]* Expression <)> <;>
+
+Expression ::= LogOr 
+
+LogOr ::= LogAnd | LogAnd <or> LogAnd
+
+LogAnd ::= BitOr | BitOr <and> BitOr
+
+BitOr ::= BitAnd | BitAnd <?> BitAnd
+
+BitAnd ::= Equality | Equality <&> Equality
+
+Equality ::= Ineq | Ineq [<=> | <!=>] Ineq
+
+Ineq ::= Add | Add [< > > | < >= > | < < > | < <= >] Add
+
+Add ::= Mult | Mult [<+> | <-> | <@>] Mult
+
+Mult ::= Power | Power [<*> | </> | <%>] Power
+
+Power ::= Not | Not <^> Power
+
+Not ::= [<!> | <not>] Not | Primary
+
+Primary ::= <(> Expression <)> | <NAT> | <NINT> | <PREAL> | <NREAL> | <WORD> | <STR>
