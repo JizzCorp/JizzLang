@@ -1,49 +1,71 @@
 Program ::= Statement*
 
-Statement ::= Output | If | Case | Loop | Return | Exit | FunctionDecl | Input | Declaration | Assignment | FunctionCall | Expression 
+Statement ::= Output 
+          | IfStatement
+          | CaseStatement
+          | LoopStatement
+          | ReturnStatement
+          | ExitStatement
+          | FunctionDecl
+          | InputStatement
+          | Declaration ";"
+          | Assignment Expression ";"
+          | FunctionCall
+          | Expression ";"
 
-Output ::= <out> <(> Expression <)> <;>
+Output ::= "out" "(" Expression ")" ";"
 
-If ::= <if> Expression <,> [Statement [<;> | <else> <,> [Statement <;> | <{> Program <}>]] | [<{> Program <}> | <{> Program <}> <else> <,> [Statement <;> |<{> Program <}> ]]]
+IfStatement ::= "if" Expression "," BlockStatement [ElseClause]
+ElseClause ::= "else" "," BlockStatement
+BlockStatement ::= "{" Program "}"
 
-Case ::= <case> Expression <,> [Statement [<;> | <elsecase> <,> [Statement <;> | <{> Program <}>]] | [<{> Program <}> | <{> Program <}> <elsecase> <,> [Statement <;> |<{> Program <}> ]]]
+CaseStatement ::= "case" Expression "," BlockStatement [ElseCaseClause]
+ElseCaseClause ::= "elsecase" "," BlockStatement
 
-Loop ::= <loop> Expression <,> [Statement <;> | <{> Program <}>]
+LoopStatement ::= "loop" Expression "," BlockStatement
 
-Return ::= <return> Expression <;>
+ReturnStatement ::= "return" Expression ";"
 
-Exit ::= <exit> <NAT> <;>
+ExitStatement ::= "exit" "(" NAT ")" ";"
 
-FunctionDecl ::= <Function> <WORD> <ASSN> [<(>  <)> | <(> [<DTYPE> <WORD> <,>]* <DTYPE> <WORD> <)> ] <{> Program <}>
+FunctionDecl ::= "Function" WORD "<-" "(" [ParameterList] ")" "{" Program "}"
+ParameterList ::= Declaration | Declaration "," ParameterList
 
-Input ::= <DTYPE> <WORD> <ASSN> <in> <(> <)> <;> | <WORD> <ASSN> <in> <(> <)> <;>
+InputStatement ::= (Assignment | WORD "<-") "in" "(" ")" ";"
 
-Declaration ::= <DTYPE> <WORD> <;> | <DTYPE> Assignment
+Assignment ::= (Declaration | WORD) "<-"
 
-Assignment ::= <WORD> <ASSN> Expression <;>
+Declaration ::= DTYPE WORD
 
-FunctionCall ::= <WORD> <(> <)> <;> | <WORD> <(> [Expression <,>]* Expression <)> <;>
+FunctionCall ::= WORD "(" [ArgumentList] ")" ";"
+ArgumentList ::= Expression | Expression "," ArgumentList
 
-Expression ::= LogOr 
+Expression ::= LogOrExpr
 
-LogOr ::= LogAnd | LogAnd <or> LogAnd
+LogOrExpr ::= LogAndExpr ("or" LogAndExpr)*
 
-LogAnd ::= BitOr | BitOr <and> BitOr
+LogAndExpr ::= BitOrExpr ("and" BitOrExpr)*
 
-BitOr ::= BitAnd | BitAnd <?> BitAnd
+BitOrExpr ::= BitAndExpr ("?" BitAndExpr)*
 
-BitAnd ::= Equality | Equality <&> Equality
+BitAndExpr ::= EqualityExpr ("&" EqualityExpr)*
 
-Equality ::= Ineq | Ineq [<=> | <!=>] Ineq
+EqualityExpr ::= IneqExpr (("=" | "!=") IneqExpr)*
 
-Ineq ::= Add | Add [< > > | < >= > | < < > | < <= >] Add
+IneqExpr ::= AddExpr ((">" | ">=" | "<" | "<=") AddExpr)*
 
-Add ::= Mult | Mult [<+> | <-> | <@>] Mult
+AddExpr ::= MultExpr (("+"|"-"|"@") MultExpr)*
 
-Mult ::= Power | Power [<*> | </> | <%>] Power
+MultExpr ::= PowerExpr (("*"|"/"|"%") PowerExpr)*
 
-Power ::= Not | Not <^> Power
+PowerExpr ::= NotExpr ("^" NotExpr)*
 
-Not ::= [<!> | <not>] Not | Primary
+NotExpr ::= ("!"|"not")* PrimaryExpr
 
-Primary ::= <(> Expression <)> | <NAT> | <NINT> | <PREAL> | <NREAL> | <WORD> | <STR>
+PrimaryExpr ::= "(" Expression ")"
+             | NAT
+             | NINT
+             | PREAL
+             | NREAL
+             | WORD
+             | STR
