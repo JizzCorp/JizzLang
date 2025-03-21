@@ -45,7 +45,7 @@ Token* lexer(char* filename) {
 	while((ch = fgetc(program)) != EOF) {
 		if(ch == ';') {
 			tokenlist[tokenlist_cursor].name = CMD;
-			strcpy(tokenlist[tokenlist_cursor].value, ";");
+			tokenlist[tokenlist_cursor].value = ";";
 			++tokenlist_cursor;
 			// resize token list (array) if needed
 			if(tokenlist_cursor >= tokenlist_size) {
@@ -82,7 +82,7 @@ Token* lexer(char* filename) {
 
 			if(ch == '`') {
 				tokenlist[tokenlist_cursor].name = STR;
-				strcpy(tokenlist[tokenlist_cursor].value, buffer);
+				tokenlist[tokenlist_cursor].value =  buffer;
 				++tokenlist_cursor;
 				// resize token list (array) if needed
 				if(tokenlist_cursor >= tokenlist_size) {
@@ -140,7 +140,7 @@ Token* lexer(char* filename) {
 				if(state[j] == FINAL) {
 					if(!state_detected) {
 						tokenlist[tokenlist_cursor].name = token_names[j];
-						strcpy(tokenlist[tokenlist_cursor].value, buffer);
+						tokenlist[tokenlist_cursor].value = buffer;
 
 						if(j == 0) { // i.e. a WORD token type was detected
 							TokenName tokenname = recognize_token(buffer);
@@ -177,7 +177,7 @@ Token* lexer(char* filename) {
 					exit(1);
 				}
 				tokenlist[tokenlist_cursor].name = tokenname;
-				strcpy(tokenlist[tokenlist_cursor].value, buffer);
+				tokenlist[tokenlist_cursor].value = buffer;
 				++tokenlist_cursor;
 				// resize token list (array) if needed
 				if(tokenlist_cursor >= tokenlist_size) {
@@ -196,7 +196,7 @@ Token* lexer(char* filename) {
 				char strch[] = {ch, '\0'};
 				TokenName tokenname = recognize_token(strch);
 				tokenlist[tokenlist_cursor].name = tokenname;
-				strcpy(tokenlist[tokenlist_cursor].value, strch);
+				tokenlist[tokenlist_cursor].value = strch;
 				++tokenlist_cursor;
 				// resize token list (array) if needed
 				if(tokenlist_cursor >= tokenlist_size) {

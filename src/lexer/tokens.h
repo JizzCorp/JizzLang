@@ -26,7 +26,7 @@ typedef enum {
 
 typedef struct {
 	TokenName name;
-	char value[100];
+	char* value;
 } Token;
 
 TokenName recognize_token(char* target);
