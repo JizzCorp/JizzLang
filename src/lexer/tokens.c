@@ -2,64 +2,47 @@
 #include "tokens.h"
 
 TokenName recognize_token(char* target) {
-	if(!strcmp(target, "if")       ||
-	   !strcmp(target, "else")     ||
-	   !strcmp(target, "case")     ||
-	   !strcmp(target, "elsecase") ||
-	   !strcmp(target, "loop")     ||
-	   !strcmp(target, "exit")     ||
-	   !strcmp(target, "return")
-	) return CFLOW;
+	if(!strcmp(target, "if")) return IF;
+	if(!strcmp(target, "else")) return ELSE;
+	if(!strcmp(target, "case")) return CASE;
+	if(!strcmp(target, "elsecase")) return ELSECASE;
+	if(!strcmp(target, "loop")) return LOOP;
+	if(!strcmp(target, "exit")) return EXIT;
+	if(!strcmp(target, "return")) return RETURN;
 
-	if (!strcmp(target, "in") ||
-		!strcmp(target, "out")
-	) return IO;
+	if(!strcmp(target, "input")) return INPUT;
+	if(!strcmp(target, "output")) return OUTPUT;
 
-	if(!strcmp(target, "Bool") ||
-	   !strcmp(target, "Int")  ||
+	if(!strcmp(target, "Int")  ||
 	   !strcmp(target, "Flt")  ||
-	   !strcmp(target, "Str")  ||
-	   !strcmp(target, "Function")
+	   !strcmp(target, "Str")
 	) return DTYPE;
 
-	if(!strcmp(target, "(") ||
-	   !strcmp(target, ")") ||
-	   !strcmp(target, "[") ||
-	   !strcmp(target, "]") ||
-	   !strcmp(target, "{") ||
-	   !strcmp(target, "}")
-	) return PAR;
+	if(!strcmp(target, "(")) return ORND;
+	if(!strcmp(target, ")")) return CRND;
+	if(!strcmp(target, "{")) return OCRL;
+	if(!strcmp(target, "}")) return CCRL;
 
-	if(!strcmp(target, ";") ||
-	   !strcmp(target, ",")
-	) return CMD;
+	if(!strcmp(target, ";")) return SEMI;
+	if(!strcmp(target, ",")) return COMM;
 
 	if(!strcmp(target, "<-")) return ASSN;
 
-	if(!strcmp(target, "<")  ||
-	   !strcmp(target, ">")  ||
-	   !strcmp(target, "=")  ||
-	   !strcmp(target, "<=") ||
-	   !strcmp(target, ">=") ||
-	   !strcmp(target, "!=")
-	) return CMP;
+	if(!strcmp(target, "!=")) return NEQ;
+	if(!strcmp(target, "=")) return EQ;
+	if(!strcmp(target, "<")) return LT;
+	if(!strcmp(target, "<=")) return LEQ;
+	if(!strcmp(target, ">")) return GT;
+	if(!strcmp(target, ">=")) return GEQ;
 
-	if(!strcmp(target, "+") ||
-	   !strcmp(target, "-") ||
-	   !strcmp(target, "*") ||
-	   !strcmp(target, "/") ||
-	   !strcmp(target, "%") ||
-	   !strcmp(target, "@") ||
-	   !strcmp(target, "^") ||
-	   !strcmp(target, "and") ||
-	   !strcmp(target, "or") ||
-	   !strcmp(target, "not")
-	) return OP;
-
-	if(!strcmp(target, "&") ||
-	   !strcmp(target, "|") ||
-	   !strcmp(target, "!")
-	) return BOP;
+	if(!strcmp(target, "+")) return SUM;
+	if(!strcmp(target, "-")) return SUB;
+	if(!strcmp(target, "*")) return MUL;
+	if(!strcmp(target, "/")) return DIV;
+	if(!strcmp(target, "%")) return MOD;
+	if(!strcmp(target, "and")) return AND;
+	if(!strcmp(target, "or")) return OR;
+	if(!strcmp(target, "not")) return NOT;
 
 	return UNRECOGNIZED;
 }

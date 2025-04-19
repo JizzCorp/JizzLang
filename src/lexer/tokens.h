@@ -11,22 +11,44 @@ typedef enum {
 	NREAL,
 	PREAL,
 	STR,
-	CFLOW,
-	IO,
+	IF,
+	ELSE,
+	CASE,
+	ELSECASE,
+	LOOP,
+	EXIT,
+	RETURN,
+	INPUT,
+	OUTPUT,
 	DTYPE,
-	PAR,
-	CMD,
+	ORND,
+	CRND,
+	OCRL,
+	CCRL,
+	SEMI,
+	COMM,
 	ASSN,
-	CMP,
-	OP,
-	BOP,
+	SUM,
+	SUB,
+	MUL,
+	DIV,
+	MOD,
+	AND,
+	OR,
+	NOT,
+	NEQ,
+	EQ,
+	LT,
+	LEQ,
+	GT,
+	GEQ,
 	EOTL,
 	UNRECOGNIZED
 } TokenName;
 
 typedef struct {
-	TokenName name;
 	char* value;
+	TokenName name;
 } Token;
 
 TokenName recognize_token(char* target);

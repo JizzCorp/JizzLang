@@ -1,29 +1,26 @@
-parsertest: parser.o lexer.o word_automaton.o nat_automaton.o preal_automaton.o nint_automaton.o nreal_automaton.o tokens.o
-	@gcc -o parsertest parser.o lexer.o word_automaton.o nat_automaton.o preal_automaton.o nint_automaton.o nreal_automaton.o tokens.o
+cumpiler: main.o symbol_table.o codegen.o parser.o lexer.o automata.o tokens.o
+	@gcc -o cumpiler main.o symbol_table.o codegen.o parser.o lexer.o automata.o tokens.o
+
+main.o: main.c
+	@gcc main.c -o main.o -c
+
+symbol_table.o: symbol_table.c
+	@gcc symbol_table.c -o symbol_table.o -c
+
+codegen.o: codegen/codegen.c
+	@gcc codegen/codegen.c -o codegen.o -c
 
 parser.o: parser/parser.c
-	@gcc parser/parser.c -o parser.o -c
+	@gcc Parser/parser.c -o parser.o -c
 
 lexer.o: lexer/lexer.c
 	@gcc lexer/lexer.c -o lexer.o -c
 
-word_automaton.o: lexer/word_automaton.c
-	@gcc lexer/word_automaton.c -o word_automaton.o -c
-
-nat_automaton.o: lexer/nat_automaton.c
-	@gcc lexer/nat_automaton.c -o nat_automaton.o -c
-
-preal_automaton.o: lexer/preal_automaton.c
-	@gcc lexer/preal_automaton.c -o preal_automaton.o -c
-
-nint_automaton.o: lexer/nint_automaton.c
-	@gcc lexer/nint_automaton.c -o nint_automaton.o -c
-
-nreal_automaton.o: lexer/nreal_automaton.c
-	@gcc lexer/nreal_automaton.c -o nreal_automaton.o -c
+automata.o lexer/automata.c:
+	@gcc lexer/automata.c -o automata.o -c
 
 tokens.o: lexer/tokens.c
 	@gcc lexer/tokens.c -o tokens.o -c
 
 clean:
-	@rm parser.o lexer.o word_automaton.o nat_automaton.o preal_automaton.o nint_automaton.o nreal_automaton.o tokens.o
+	@rm main.o symbol_table.o codegen.o parser.o lexer.o automata.o tokens.o
